@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>For Maryam 💐</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #5a0f2e, #8b1e3f);
+  color: #fff;
+  text-align: center;
+  overflow: hidden;
+}
+.container {
+  padding: 30px 20px;
+  position: relative;
+  min-height: 80vh;
+}
+#page2 {
+  overflow-y: auto;
+  max-height: 80vh;
+}
+h1 {
+  font-size: 2.5em;
+  margin-bottom: 10px;
+  animation: fadeIn 2s ease;
+}
+button {
+  padding: 14px 26px;
+  font-size: 1.1em;
+  border: none;
+  border-radius: 30px;
+  margin: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+#whatBtn { background: #f7a1c4; color: #5a0f2e; }
+#yesBtn { background: #ff4d6d; color: white; }
+#noBtn { background: #aaa; color: black; position: absolute; }
+#nextBtn { background: #f7a1c4; color: #5a0f2e; display: none; }
+#interactionBtn { background: #f7a1c4; color: #5a0f2e; display: none; }
+.hidden { display: none; }
+#letter { margin-top: 15px; font-size: 1em; line-height: 1.7; white-space: pre-wrap; }
+#mwah { font-size: 1.5em; margin-bottom: 10px; display: none; }
+.bigBold { font-size: 1.8em; font-weight: 900; margin-top: 20px; }
+.interactiveText { margin-top: 20px; font-size: 1.4em; white-space: pre-wrap; }
+@keyframes fadeIn { from { opacity:0; transform: translateY(20px);} to {opacity:1; transform:translateY(0);} }
+/* Bouquet animation */
+.bouquet { position:absolute; top:10%; left:-200px; font-size:3em; animation: moveBouquet 12s linear infinite;}
+@keyframes moveBouquet { from { left:-200px;} to {left:110%;} }
+/* Floating items */
+.float { position:absolute; font-size:2.5em; animation: float 6s ease-in-out infinite;}
+@keyframes float {0% {transform:translateY(0);} 50%{transform:translateY(-20px);} 100%{transform:translateY(0);}}
+</style>
+</head>
+<body onclick="playMusic()">
+
+<!-- Floating items -->
+<div class="bouquet">💐💐💐</div>
+<div class="float" style="top:70%; left:10%;">🍜</div>
+<div class="float" style="top:75%; right:10%;">👠</div>
+
+<!-- Page 1 -->
+<div class="container" id="page1">
+  <h1 id="title">Will u be</h1>
+  <button id="whatBtn" onclick="reveal()">What?</button>
+</div>
+
+<!-- Page 2 -->
+<div class="container hidden" id="page2">
+  <h1 id="title2">Will u be my Jaan?</h1>
+  <button id="yesBtn" onclick="showLetter()">Yes</button>
+  <button id="noBtn">No</button>
+  <div id="mwah">Mwahhhhhhhh 💋</div>
+  <div id="letter"></div>
+  <button id="nextBtn" onclick="goPage3()">Next</button>
+</div>
+
+<!-- Page 3 interactive -->
+<div class="container hidden" id="page3">
+  <!-- First Interaction -->
+  <div id="interaction1" class="interactiveText">Apko pta hai ap ne muje kia nhi dia?</div>
+  <button id="interactionBtn1" class="interactionBtn" onclick="showAnswer1()">Kia?</button>
+  <div id="answer1" class="interactiveText hidden">Apne pappi nhi di na 😒</div>
+  <button id="nextInteraction" class="hidden" onclick="showInteraction2()">Next</button>
+
+  <!-- Second Interaction -->
+  <div id="interaction2" class="interactiveText hidden">Mere sath hamesha 1 kaam kro gi?</div>
+  <button id="interactionBtn2" class="interactionBtn hidden" onclick="showAnswer2()">Kia?</button>
+  <div id="answer2" class="interactiveText hidden">Mere sath hamesha shawarma khane chlo gi na? 😭👉🏻👈🏻</div>
+  <div id="hug" class="interactiveText hidden">🫂</div>
+</div>
+
+<audio id="music" loop>
+  <source src="https://cdn.pixabay.com/audio/2022/03/15/audio_9c8c56e5c6.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+let clicks = 0;
+let noScale = 1;
+
+// Page1 "What?" button logic
+function reveal() {
+  clicks++;
+  if (clicks >= 3) {
+    document.getElementById("page1").classList.add("hidden");
+    document.getElementById("page2").classList.remove("hidden");
+    positionNo();
+  }
+}
+
+// No button playful
+function positionNo() {
+  const no = document.getElementById("noBtn");
+  no.style.top = Math.random() * 60 + 20 + "%";
+  no.style.left = Math.random() * 60 + 20 + "%";
+}
+document.getElementById("noBtn").addEventListener("mouseenter", () => {
+  noScale -= 0.08;
+  const no = document.getElementById("noBtn");
+  no.style.transform = `scale(${noScale})`;
+  positionNo();
+});
+document.getElementById("noBtn").addEventListener("click", e => {
+  e.preventDefault();
+  positionNo();
+});
+
+// Show Mwah + letter
+function showLetter() {
+  const yesBtn = document.getElementById("yesBtn");
+  const noBtn = document.getElementById("noBtn");
+  const title2 = document.getElementById("title2");
+
+  // Hide the original question and buttons
+  title2.style.display = "none";
+  yesBtn.style.display = "none";
+  noBtn.style.display = "none";
+
+  // Prevent multiple clicks
+  yesBtn.disabled = true;
+
+  // Show Mwah
+  document.getElementById("mwah").style.display = "block";
+
+  const text = `Maryam...
+
+Idk how to say this, but you have a complete different vibe with me,
+muje esa lgta hai k me apse koi bhi baat krlo jo bhi bol lo ap un me se nhi jo judge kre.
+
+You are truly a genuine, kind and the most beautiful person I've ever met.
+Idk, muje kiu esa lgta apse baat krni hoti hr wakt apka wait krta rehta.
+
+Even though baat krne k liye koi topic nhi hota,
+mgr phr bhi apka ok ok not cool I'm cool bhi boht hota.
+
+Apki presence se muje sukoon milta.
+Ese k bs chat me bethe rhe koi topic bhi na ho mgr phr bhi araam hota.
+
+I want to be your friend forever.
+And I hope that you feel the same.
+
+I'm sorry if I'm overwhelming ya agr ap tang ati.
+Aur hn agr kbhi kuch bhi ho, meri zarurat ho — btana zarur.
+
+Aur agr ye sab bura laga, ye site waghera,
+to I'm really sorry.
+
+One of the biggest things I'm scared of is losing you
+aur mai nhi chahta ke kuch bhi badle hamare darmiyan.
+
+Bs samajh jana.`;
+
+  typeWriter(text, () => { 
+    document.getElementById("nextBtn").style.display = "inline-block";
+  });
+}
+
+// Typing effect slower
+function typeWriter(text, callback) {
+  let i = 0;
+  const speed = 50; // slower
+  const letter = document.getElementById("letter");
+  const page2 = document.getElementById("page2");
+  letter.innerHTML = "";
+  const interval = setInterval(() => {
+    letter.innerHTML += text.charAt(i);
+    i++;
+    page2.scrollTop = page2.scrollHeight;
+    if (i >= text.length) {
+      clearInterval(interval);
+      if(callback) callback();
+    }
+  }, speed);
+}
+
+// Go to page 3
+function goPage3() {
+  document.getElementById("page2").classList.add("hidden");
+  document.getElementById("page3").classList.remove("hidden");
+  document.getElementById("interactionBtn1").style.display = "inline-block";
+}
+
+// Interaction 1
+function showAnswer1() {
+  document.getElementById("answer1").classList.remove("hidden");
+  document.getElementById("interactionBtn1").style.display = "none";
+  document.getElementById("nextInteraction").classList.remove("hidden");
+}
+
+// Go to interaction 2
+function showInteraction2() {
+  document.getElementById("interaction1").classList.add("hidden");
+  document.getElementById("answer1").classList.add("hidden");
+  document.getElementById("nextInteraction").classList.add("hidden");
+  document.getElementById("interaction2").classList.remove("hidden");
+  document.getElementById("interactionBtn2").style.display = "inline-block";
+}
+
+// Interaction 2
+function showAnswer2() {
+  document.getElementById("answer2").classList.remove("hidden");
+  document.getElementById("interactionBtn2").style.display = "none";
+  document.getElementById("hug").classList.remove("hidden");
+}
+
+// Music
+function playMusic() {
+  document.getElementById("music").play();
+}
+</script>
+</body>
+</html>
